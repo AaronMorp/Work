@@ -82,21 +82,13 @@
 
 <script>
     $(document).ready(function () {
-        $("AddNewInvoice").click(function () {
-            $.ajax({
-                type: "POST",
-                url: "Create",
+        $("#AddNewInvoice").click(function () {
+            $.ajax({ //Do an ajax post to the controller
+                type: 'POST',
+                url: './Invoice/Crete',
+                data: JSON.stringify(JSONObject),
                 contentType: "application/json; charset=utf-8",
-                datatype: "json",
-                data: {
-                    model: model
-                },
-                success: function (Result) {
-                    alert("Success");
-                },
-                error: function (error) {
-                    alert("Failed");
-                }
+                dataType: "json"
             });
         });
 </script>
