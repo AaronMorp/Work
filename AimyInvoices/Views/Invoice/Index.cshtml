@@ -85,10 +85,13 @@
         $("#AddNewInvoice").click(function () {
             $.ajax({ //Do an ajax post to the controller
                 type: 'POST',
-                url: './Invoice/Crete',
-                data: JSON.stringify(JSONObject),
+                url: './Invoice/Create',
+                data: {
+                    Id : Id
+                },
                 contentType: "application/json; charset=utf-8",
                 dataType: "json"
+            });
             });
         });
 </script>
