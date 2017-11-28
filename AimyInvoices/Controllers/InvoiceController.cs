@@ -115,7 +115,7 @@ namespace AimyInvoices.Controllers
         {
             repository.AddInvoice(model, Id);
             repository.Save();
-            return RedirectToAction("Index");
+            return Json(model);
         }
 
     }
