@@ -1,0 +1,119 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}​
+
+
+<div class="container">
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-default btn-group-sm" data-toggle="modal" data-target="#myModal">New Invoice</button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body" id="TextboxGroup">
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">
+                            Select parent..
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">HTML</a></li>
+                        </ul>
+                    </div>
+                    <label class="col-xs-3 control-label" for="DateTime">Invoice Date</label>
+                    <div class="col-xs-5">
+                        <input type="date" class="form-control" id="DateTime" placeholder="choose date" />
+                    </div>
+                    <br> <br />
+                    <label class="col-xs-3 control-label" for="DueDate">Invoice Due Date</label>
+                    <div class="col-xs-5">
+                        <input type="date" class="form-control" id="DueDate" placeholder="choose date" />
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-sm" id="insertLine">Insert Line</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="removeLine">Remove Line</button>
+                    <br> <br />
+                    
+                    <label class="col-xs-3 control-label" for="Description">Description</label>
+                    <div class="col-xs-5">
+                        <input type="text" class="form-control" id="Description" placeholder="Description" />
+                    </div>
+                    <br> <br />
+                    <label class="col-xs-3 control-label" for="Qty">Qty</label>
+                    <div class="col-xs-2">
+                        <input type="number" class="form-control" id="Qty" />
+                    </div>
+
+                    <label class="col-xs-3 control-label" for="UnitPrice">Unit Price</label>
+                    <div class="col-xs-3">
+                        <input type="number" class="form-control" id="UnitPrice" />
+                    </div>
+                    <br> <br />
+                    <label class="col-xs-3 control-label" for="Amount">Amount</label>
+                    <div class="col-xs-3">
+                        <input type="number" class="form-control" id="Amount" value="" />
+                    </div>
+                    <br> <br />
+                    <div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="AddNewInvoice" onclick ="Save()" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+   <script>
+       $(document).ready(function () {
+           var counter = 2;
+           $("#insertLine").click(function () {
+               if (counter > 10) {
+                   alert("Only 10 textboxes allow");
+                   return false;
+               }
+ 
+               var newTextBoxDiv = $(document.createElement('div'))
+                   .attr("id", 'TextBoxDiv' + counter);
+               newTextBoxDiv.append('<label>Description' + counter + ' : </label>' +
+                   '<input type="text" name="textbox' + counter +
+                   '" id="Description' + counter + '" value="" >' +
+                   '<label>Qty' + counter + ' : </label>' +
+                   '<input type="number" name="number' + counter +
+                   '" id="Qty' + counter + '" value="" >' +
+                   '<label>Unit Price' + counter + ' : </label>' +
+                   '<input type="number" name="number' + counter +
+                   '" id="UnitPrice' + counter + '" value="" >' + '<label>Amount' + counter + ' : </label>' +
+                   '<input type="number" name="number' + counter +
+                   '" id="Amount' + counter + '" value="" />');
+
+               newTextBoxDiv.appendTo("#TextboxGroup");
+
+               counter++;
+           });
+           $("#removeLine").on('click', function () {
+               if (counter == 1) {
+                   alert("No more textbox to remove");
+                   return false;
+               }
+               counter--;
+               $("#TextBoxDiv" + counter).remove();
+           });
+
+           $("#getButtonValue").on('click', function () {
+               var msg = '';
+               for (i = 1; i < counter; i++) {
+                   msg += "\n Textbox #" + i + " : " + $('#textbox' + i).val();
+               }
+               alert(msg);
+           });
+       });
+</script>
