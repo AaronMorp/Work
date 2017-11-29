@@ -82,10 +82,11 @@
 
 <script>
     $(document).ready(function () {
+        var Id = $("#Id").val();
         $("#AddNewInvoice").click(function () {
             $.ajax({ //Do an ajax post to the controller
-                type: 'POST',
-                url: './Invoice/Create',
+                type: "POST",
+                url: "Create",
                 data: {
                     Id : Id
                 },
