@@ -38,17 +38,11 @@ namespace AimyInvoices.DAL
                         join c in db.Contact on u.ContactId equals c.Id
                
                         where i.BillingId == b.Id
-                        // db.Invoice
-
-                        // where(i => i.Billing.Name.Contains("Term"))
                         select new
                         {
                             FirstName = c.FirstName + " " + c.LastName,
                             MiddleName = c.MiddleName,
                             LastName = c.LastName,
-                         //   Children = c.Children.ToList(),
-                            //    Children1 = c.Children1,
-                            //    Children2 = c.Children2,
                             Id = i.Id,
                             BillingId = i.BillingId,
                             Reference = i.Reference,
@@ -59,9 +53,6 @@ namespace AimyInvoices.DAL
                         }).ToList().Select(x => new ParentChildViewModel()
                               {
                             FirstName = x.FirstName + " "+ x.MiddleName + " " + x.LastName,                                             
-                          //  Children = x.Children.ToList(),
-                             // Children1 = x.Children1,
-                            //  Children2 = x.Children2,
                             Id = x.Id,
                             BillingId = x.BillingId,
                             Reference = x.Reference,
@@ -112,6 +103,7 @@ namespace AimyInvoices.DAL
             Billing billing;
             billing = new Billing
             {
+                
                 Id = model.BillingId,
                 UserId = model.Id,
                 SiteId = model.SiteId,

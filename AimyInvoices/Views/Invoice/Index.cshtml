@@ -24,52 +24,35 @@
                     <h4 class="modal-title">New Invoice</h4>
                 </div>
                 <div class="modal-body" id="TextboxGroup">
-                    <div class="dropdown">
+                    @*<div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">
                             Select parent..
                             <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                        </button>*@
+                        @*<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">HTML</a></li>
-                        </ul>
-                    </div>
-                    <label class="col-xs-3 control-label" for="DateTime">Invoice Date</label>
-                    <div class="col-xs-5">
-                        <input type="date" class="form-control" id="DateTime" placeholder="choose date" />
-                    </div>
+                        </ul>*@
+                        <label class="col-xs-3 control-label" for="DateTime">Parent Name</label>
+                <div class="col-xs-5">
+                 <input type="text" class="form-control" id="ParentName" />
+                     </div>
                     <br> <br />
-                    <label class="col-xs-3 control-label" for="DueDate">Invoice Due Date</label>
-                    <div class="col-xs-5">
-                        <input type="date" class="form-control" id="DueDate" placeholder="choose date" />
-                    </div>
+                        <label class="col-xs-3 control-label" for="DateTime">Invoice Date</label>
+                        <div class="col-xs-5">
+                            <input type="date" class="form-control" id="DateTime" placeholder="choose date" />
+                        </div>
+                        <br> <br />
+                        <label class="col-xs-3 control-label" for="DueDate">Invoice Due Date</label>
+                        <div class="col-xs-5">
+                            <input type="date" class="form-control" id="DueDate" placeholder="choose date" />
+                        </div>
 
-                    <button type="button" class="btn btn-primary btn-sm" id="insertLine">Insert Line</button>
-                    <button type="button" class="btn btn-primary btn-sm" id="removeLine">Remove Line</button>
-                    <br> <br />
-
-                    <label class="col-xs-3 control-label" for="Description">Description</label>
-                    <div class="col-xs-5">
-                        <input type="text" class="form-control" id="Description" placeholder="Description" />
+                        <button type="button" class="btn btn-primary btn-sm" id="insertLine">Insert Line</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="removeLine">Remove Line</button>
+                        <br> <br />
+                        <div>
+                        </div>
                     </div>
-                    <br> <br />
-                    <label class="col-xs-3 control-label" for="Qty">Qty</label>
-                    <div class="col-xs-2">
-                        <input type="number" class="form-control" id="Qty" />
-                    </div>
-
-                    <label class="col-xs-3 control-label" for="UnitPrice">Unit Price</label>
-                    <div class="col-xs-3">
-                        <input type="number" class="form-control" id="UnitPrice" />
-                    </div>
-                    <br> <br />
-                    <label class="col-xs-3 control-label" for="Amount">Amount</label>
-                    <div class="col-xs-3">
-                        <input type="number" class="form-control" id="Amount" value="" />
-                    </div>
-                    <br> <br />
-                    <div>
-                    </div>
-                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal" id="AddNewInvoice">Add</button>
@@ -82,8 +65,42 @@
 
 <script>
     $(document).ready(function () {
-        var model = $("#model").val();
+        
+        var counter = 1;
         $("#AddNewInvoice").click(function () {
+            
+            var parentName = $("#ParentName").val();
+            var dueDate = $("#DueDate").val();
+            var DateTime = $("#DateTime").val();
+            var lines = savelines();
+            var creativecount = 0;
+            var totalAmount = 10;
+            var currentDate = calcDate();
+            var model = {
+                "Id": creativecount,
+                "ParentName": parentName,
+                "Description": "Testing",
+                "Invoicedate": DateTime,
+                "DueDate": dueDate,
+                "UserId": "9504",
+                "SiteId": "256",
+                "CreatedBy": "intern@centralstationsoftware.co.nz",
+                "UpdatedBy": "intern@centralstationsoftware.co.nz",
+                "Email": "intern@centralstationsoftware.co.nz",
+                "Reference": $('#Reference').val(),
+                "InvoiceType": "inv",
+                "XeroInvoiceCode": "null",
+                "InvoiceLine": lines,
+                "IsActive": "true",
+                "StatusId": "54",
+                "TotalAmount": totalAmount,
+                "OriginalCost": totalAmount,
+                "EstimatedCost": totalAmount,
+                "CreatedOn": currentDate,
+                "UpdatedOn": currentDate,
+                "PeriodStart": currentDate,
+                "PeriodEnd": currentDate
+            };
             $.ajax({
                 url: '@Url.Action("Create", "Invoice")',
                 type: 'POST',
@@ -104,12 +121,65 @@
                 }
             });
             });
-            });
-</script>
 
-<script>
-    $(document).ready(function () {
-        var counter = 2;
+
+    function calcDate() {
+        var d = new Date();
+        var month = d.getMonth() + 1;
+        var day = d.getDate();
+        var output = (('' + day).length < 2 ? '0' : '') + day + '-' +
+            (('' + month).length < 2 ? '0' : '') + month + '-' +
+            d.getFullYear();
+        return output;
+    }
+
+    function savelines() {
+        var totalAmount = 0;
+        var currentdate = calcDate();
+        var line = [];
+        var msg1 = [];
+        var error = $(".error");
+        for (i = 1; i < counter; i++) {
+            msg1 = [];
+            var description = $('#Description' + i).val();
+            var quantity = $('#Quantity' + i).val();
+            var unitprice = $('#UnitPrice' + i).val();
+            var amount = $('#TotalAmount' + i).val();
+            if (description == "") {
+                error.html("Enter description value ");
+                return false;
+            }
+            else if (quantity == "") {
+                error.html("Enter quantity value ");
+                return false;
+            }
+            else if (unitprice == "") {
+                error.html("Enter unitprice value ");
+                return false;
+            }
+            else if (amount == "") {
+                error.html("Enter amount value ");
+                return false;
+            }
+            else {
+                var msg1 = {
+                    "Description": description,
+                    "Quantity": quantity,
+                    "UnitPrice": unitprice,
+                    "Amount": amount,
+                    "TotalAmount": totalAmount,
+                    "CreatedBy": "intern@centralstationsoftware.co.nz",
+                    "UpdatedBy": "intern@centralstationsoftware.co.nz",
+                    "CreatedOn": currentdate,
+                    "UpdatedOn": currentdate
+                };
+                line.push(msg1);
+            }
+            return line;
+        }
+    }
+
+        
         $("#insertLine").click(function () {
             if (counter > 10) {
                 alert("Only 10 textboxes allow");
@@ -121,9 +191,9 @@
             newTextBoxDiv.append('<label>Description' + counter + ' : </label>' +
                 '<input type="text" name="textbox' + counter +
                 '" id="Description' + counter + '" value="" >' +
-                '<label>Qty' + counter + ' : </label>' +
+                '<label>Quantity' + counter + ' : </label>' +
                 '<input type="number" name="number' + counter +
-                '" id="Qty' + counter + '" value="" >' +
+                '" id="Quantity' + counter + '" value="" >' +
                 '<label>Unit Price' + counter + ' : </label>' +
                 '<input type="number" name="number' + counter +
                 '" id="UnitPrice' + counter + '" value="" >' + '<label>Amount' + counter + ' : </label>' +
