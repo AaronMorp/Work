@@ -86,7 +86,7 @@
         $("#AddNewInvoice").click(function () {
             $.ajax({ //Do an ajax post to the controller
                 type: "POST",
-                url: "Create",
+                url: '@Url.Action("Create", "Invoice")',
                 data: {
                     Id : Id
                 },
