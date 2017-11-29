@@ -90,7 +90,7 @@
                 "Reference": $('#Reference').val(),
                 "InvoiceType": "inv",
                 "XeroInvoiceCode": "null",
-                "InvoiceLine": lines,
+                "InvoiceLines": lines,
                 "IsActive": "true",
                 "StatusId": "54",
                 "TotalAmount": totalAmount,
@@ -102,7 +102,7 @@
                 "PeriodEnd": currentDate
             };
             $.ajax({
-                url: '@Url.Action("Create", "Invoice")',
+                url: '@Url.Action("AddInvoice", "Invoice")',
                 type: 'POST',
                 dataType: 'json',
                 data: { model: model },
