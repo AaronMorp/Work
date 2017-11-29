@@ -17,7 +17,7 @@ namespace AimyInvoices.DAL
         void Update(Invoice obj);
         void Delete(int Id);
         void Save();
-        void AddInvoice(ParentChildViewModel model, int Id);
+        void AddInvoice(ParentChildViewModel model);
         IEnumerable<Invoice> Search(string searchNames);
         IEnumerable<ParentChildViewModel> GetInformation();
 

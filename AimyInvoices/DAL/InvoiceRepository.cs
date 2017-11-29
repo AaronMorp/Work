@@ -106,7 +106,7 @@ namespace AimyInvoices.DAL
             db.Entry(obj).State = EntityState.Modified;
         }
 
-        public void AddInvoice(ParentChildViewModel model, int Id)
+        public void AddInvoice(ParentChildViewModel model)
         {
             var billingSaved = new List<Billing>();
             Billing billing;

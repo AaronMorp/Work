@@ -111,9 +111,9 @@ namespace AimyInvoices.Controllers
         }
 
        [HttpPost]
-       public ActionResult Create(ParentChildViewModel model, int Id)
+       public ActionResult Create(ParentChildViewModel model)
         {
-            repository.AddInvoice(model, Id);
+            repository.AddInvoice(model);
             repository.Save();
             return Json(model);
         }

@@ -84,7 +84,7 @@
     $(document).ready(function () {
         var model = $("#model").val();
         $("#AddNewInvoice").click(function () {
-$.ajax({
+            $.ajax({
                 url: '@Url.Action("Create", "Invoice")',
                 type: 'POST',
                 dataType: 'json',
@@ -102,6 +102,8 @@ $.ajax({
                     //called when there is an error
                     console.log('Ajax call failed');
                 }
+            });
+            });
             });
 </script>
 
