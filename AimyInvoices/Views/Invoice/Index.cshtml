@@ -82,19 +82,27 @@
 
 <script>
     $(document).ready(function () {
-        var Id = $("#Id").val();
+        var model = $("#model").val();
         $("#AddNewInvoice").click(function () {
-            $.ajax({ //Do an ajax post to the controller
-                type: "POST",
+$.ajax({
                 url: '@Url.Action("Create", "Invoice")',
-                data: {
-                    Id : Id
+                type: 'POST',
+                dataType: 'json',
+                data: { model: model },
+                success: function (data) {
+                    console.log(data);
+                    if (data.success == true) {
+                        alert(data.responseText);
+                    }
+                    else {
+                        alert(data.responseText);
+                    }
                 },
-                contentType: "application/json; charset=utf-8",
-                dataType: "json"
+                error: function (e) {
+                    //called when there is an error
+                    console.log('Ajax call failed');
+                }
             });
-            });
-        });
 </script>
 
 <script>
