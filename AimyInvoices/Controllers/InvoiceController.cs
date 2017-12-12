@@ -110,13 +110,98 @@ namespace AimyInvoices.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
-       [HttpPost]
-       public ActionResult AddInvoice(ParentChildViewModel model)
+        [HttpPost]
+        public ActionResult AddInvoice(CreateInvoiceModel model)
         {
-            repository.AddInvoice(model);
-            repository.Save();
-            return Json(model);
+            if (ModelState.IsValid)
+            {
+                repository.AddInvoice(model);
+                repository.Save();
+
+            }
+            return RedirectToAction("Index");
         }
+        //[HttpPost]
+        //public ActionResult AddInvoice(CreateInvoiceModel model)
+        //{
+        //    InvoiceContext _db = new InvoiceContext();
+        //    if (ModelState.IsValid)
+        //    {
+        //        var billingSaved = new List<Billing>();
+        //        Billing billing;
+        //        billing = new Billing
+        //        {
+        //            UserId = model.Id,
+        //            SiteId = model.SiteId,
+        //            OriginalCost = model.OriginalCost,
+        //            EstimatedCost = model.EstimatedCost,
+        //            CreatedOn = model.CreatedOn,
+        //            UpdatedOn = model.UpdatedOn,
+        //            IsActive = model.IsActive,
+        //            CreatedBy = model.CreatedBy,
+        //            UpdatedBy = model.UpdatedBy
+        //        };
+        //        billingSaved.Add(billing);
+        //        _db.Billing.Add(billing);
+        //        var billingId = billing.Id;
+
+        //        var invoiceDetails = new Invoice
+        //        {
+        //            BillingId = billingId,
+        //            Email = model.Email,
+        //            StatusId = model.StatusId,
+        //            IsActive = model.IsActive,
+        //            Reference = model.Reference,
+        //            Description = model.Description,
+        //            DueDate = model.DueDate,
+        //            PeriodEnd = model.PeriodEnd,
+        //            PeriodStart = model.PeriodStart,
+        //            InvoiceDate = model.InvoiceDate,
+        //            TotalAmount = model.TotalAmount,
+        //            CreatedBy = model.CreatedBy,
+        //            UpdatedBy = model.UpdatedBy,
+        //            CreatedOn = model.CreatedOn,
+        //            UpdatedOn = model.UpdatedOn,
+        //            AmountDue = model.Due
+        //        };
+        //        _db.Invoice.Add(invoiceDetails);
+
+        //        var invoiceId = invoiceDetails.Id;
+        //        var lines = model.InvoiceLine;
+
+        //        if (lines != null)
+        //        {
+        //            var invoiceLines = new List<InvoiceLine>();
+        //            {
+        //                foreach (var line in lines)
+        //                {
+        //                    var invoiceLine = new InvoiceLine
+        //                    {
+        //                        InvoiceId = invoiceId,
+        //                        Amount = line.Amount,
+        //                        IsActive = model.IsActive,
+        //                        CreatedBy = model.CreatedBy,
+        //                        UpdatedBy = model.UpdatedBy,
+        //                        CreatedOn = model.CreatedOn,
+        //                        UpdatedOn = model.UpdatedOn,
+        //                        Description = line.Description,
+        //                        Quantity = line.Quantity,
+        //                        UnitPrice = line.UnitPrice,
+
+        //                    };
+        //                    invoiceLines.Add(invoiceLine);
+        //                    invoiceDetails.InvoiceLines.Add(invoiceLine);
+        //                    _db.SaveChanges();
+
+        //                }
+
+        //            }
+
+        //        }
+
+        //    }
+        //    return RedirectToAction("Index");
+        //}
 
     }
 }

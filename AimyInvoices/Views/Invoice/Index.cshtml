@@ -74,7 +74,7 @@
             var DateTime = $("#DateTime").val();
             var lines = savelines();
             var creativecount = 0;
-            var totalAmount = 10;
+            var totalAmount = 1000;
             var currentDate = calcDate();
             var model = {
                 "Id": creativecount,
@@ -90,7 +90,7 @@
                 "Reference": $('#Reference').val(),
                 "InvoiceType": "inv",
                 "XeroInvoiceCode": "null",
-                "InvoiceLines": lines,
+                "InvoiceLine": lines,
                 "IsActive": "true",
                 "StatusId": "54",
                 "TotalAmount": totalAmount,
@@ -117,7 +117,9 @@
                 },
                 error: function (e) {
                     //called when there is an error
-                    console.log('Ajax call failed');
+                   
+                   console.log('Ajax call failed');
+                    alert("ajax error")
                 }
             });
             });

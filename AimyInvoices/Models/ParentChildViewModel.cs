@@ -65,4 +65,36 @@ namespace AimyInvoices.Models
 
 
     }
+    public class CreateInvoiceModel
+    {
+        public int Id { get; set; }
+        public string ParentName { get; set; }
+        public int TotalAmount { get; set; }
+        public string Description { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Due Date Required")]
+        public DateTime DueDate { get; set; }
+        public string XeroInvoiceCode { get; set; }
+        public string InvoiceType { get; set; }
+        public int UserId { get; set; }
+        public int SiteId { get; set; }
+        public int OriginalCost { get; set; }
+        public int EstimatedCost { get; set; }
+        public bool IsActive { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
+        public string Email { get; set; }
+        public int StatusId { get; set; }
+        public decimal? Due { get; set; }
+        public string Reference { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime CreatedOn { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime UpdatedOn { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime InvoiceDate { get; set; }
+        public DateTime PeriodEnd { get; set; }
+        public DateTime PeriodStart { get; set; }
+        public IEnumerable<InvoiceLine> InvoiceLine { get; set; }
+    }
 }

@@ -97,19 +97,21 @@ namespace AimyInvoices.DAL
             db.Entry(obj).State = EntityState.Modified;
         }
 
-        public void AddInvoice(ParentChildViewModel model)
+        public void AddInvoice(CreateInvoiceModel model)
         {
             var billingSaved = new List<Billing>();
             Billing billing;
             billing = new Billing
             {
-                
-                Id = model.BillingId,
                 UserId = model.Id,
                 SiteId = model.SiteId,
                 OriginalCost = model.OriginalCost,
                 EstimatedCost = model.EstimatedCost,
                 CreatedOn = model.CreatedOn,
+                UpdatedOn=model.UpdatedOn,
+                IsActive=model.IsActive,
+                CreatedBy=model.CreatedBy,
+                UpdatedBy=model.UpdatedBy
             };
             billingSaved.Add(billing);
             db.Billing.Add(billing);
@@ -118,33 +120,58 @@ namespace AimyInvoices.DAL
             var invoiceDetails = new Invoice
             {
                 BillingId = billingId,
-                Id = model.Id,
                 Email = model.Email,
+                StatusId=model.StatusId,
+                IsActive=model.IsActive,
                 Reference = model.Reference,
                 Description = model.Description,
                 DueDate = model.DueDate,
                 PeriodEnd = model.PeriodEnd,
                 PeriodStart = model.PeriodStart,
                 InvoiceDate = model.InvoiceDate,
-                TotalAmount = model.TotalAmount               
+                TotalAmount = model.TotalAmount   ,
+                CreatedBy=model.CreatedBy,
+                UpdatedBy=model.UpdatedBy,
+                CreatedOn=model.CreatedOn,
+                UpdatedOn=model.UpdatedOn,
+                AmountDue=model.Due
             };
             db.Invoice.Add(invoiceDetails);
 
             var invoiceId = invoiceDetails.Id;
+            var lines = model.InvoiceLine;
+
+            if(lines != null) { 
             var invoiceLines = new List<InvoiceLine>();
-            
-            if (model.InvoiceLines != null)
-            {
-                foreach(var line in model.InvoiceLines)
                 {
-                    var invoiceLine = new InvoiceLine
+                    foreach (var line in lines)
                     {
-                        Quantity = model.Quantity,
-                        UnitPrice = model.UnitPrice,
-                        Amount = model.Amount,
-                    };
-                };
+                        var invoiceLine = new InvoiceLine
+                        {
+                            InvoiceId = invoiceId,
+                            Amount = line.Amount,
+                            IsActive = model.IsActive,
+                            CreatedBy = model.CreatedBy,
+                            UpdatedBy = model.UpdatedBy,
+                            CreatedOn = model.CreatedOn,
+                            UpdatedOn = model.UpdatedOn,
+                            Description = line.Description,
+                            Quantity = line.Quantity,
+                            UnitPrice = line.UnitPrice,
+                            
+                        };
+                        invoiceLines.Add(invoiceLine);
+                        invoiceDetails.InvoiceLines.Add(invoiceLine);
+                        db.Entry(model).State = EntityState.Modified;
+                        db.SaveChanges();
+                      
+                    }
+                    
+                }
+               
             }
+           
+
         }
     }
 }
